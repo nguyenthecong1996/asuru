@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title', trans('common.news.title'))
+@section('title', 'Customer')
 
 @section('breadcrumb')
     <div class="page-title">
-        <h3>{{trans('common.news.title')}}</h3>
+        <h3>Customers</h3>
     </div>
 @endsection
 
@@ -24,18 +24,21 @@
                     <div class="col-md-4">
                     </div>
                     <div class="col-md-4">
-                        <a href="{{ route ('home.create') }}" class="btn btn-primary float-right">{{trans('common.news.add_new')}}
+                        <a href="{{ route ('customers.create') }}" class="btn btn-primary float-right">Create New
                         </a>
                     </div>
                     <div class="col-md-12">
                         <div class="table-responsive hide-search-datatable custom-table">
-                            <table id="new" class="table table-striped table-bordered dt-responsive" style="width:100%">
+                            <table id="customer" class="table table-striped table-bordered dt-responsive" style="width:100%">
                                 <thead>
                                     <tr style="text-align: center">
-                                        <th style="font-weight: bold; width:5px;">{{trans('common.news.table.no')}}</th>
-                                        <th style="font-weight: bold; width:5px;">{{trans('common.news.table.title')}}</th>
-                                        <th style="font-weight: bold; width:5px;">{{trans('common.news.table.created_date')}}</th>
-                                        <th style="font-weight: bold; width:5px;">{{trans('common.news.table.action')}}</th>
+                                        <th style="font-weight: bold; width:5px;">No</th>
+                                        <th style="font-weight: bold; width:5px;">Company Name</th>
+                                        <th style="font-weight: bold; width:5px;">Address</th>
+                                        <th style="font-weight: bold; width:5px;">Company phone</th>
+                                        <th style="font-weight: bold; width:5px;">Email</th>
+                                        <th style="font-weight: bold; width:5px;">Warehouse</th>
+                                        <th style="font-weight: bold; width:5px;">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -52,13 +55,13 @@
 
 <script>
     $(document).ready(function () {
-        var table = $('#new').DataTable({
+        var table = $('#customer').DataTable({
             "dom": '<"top">rt<"bottom mt-3"<"row justify-content-between m-0"<"col-6"li><"col-6 row justify-content-end"p>>><"clear">',
             processing: true,
             deferRender: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('home.getData') }}",
+                url: "{{ route('customers.getData') }}",
                 data: function (d) {
                     d.title = $('#Filter_search').val();
                 }
@@ -66,9 +69,12 @@
             },
             "columns": [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, width: '5%', className:'text-center align-middle'},
-                {data: 'name', name: 'name', className: 'text-center align-middle mw-300',width: '30%', orderable: false},
-                {data: 'created_at', name: 'created_at', className: 'text-center align-middle mw-300',width: '30%', orderable: false},
-                {data: 'action', name: 'action', className: 'text-center align-middle minw-table', orderable: false, searchable: false, width: '10%'},
+                {data: 'company_name', name: 'company_name', className: 'text-center align-middle mw-300',width: '15%', orderable: false},
+                {data: 'address', name: 'address', className: 'text-center align-middle mw-300',width: '20%', orderable: false},
+                {data: 'company_phone', name: 'company_phone', className: 'text-center align-middle mw-300',width: '10%', orderable: false},
+                {data: 'email', name: 'email', className: 'text-center align-middle mw-300',width: '20%', orderable: false},
+                {data: 'warehouse', name: 'warehouse', className: 'text-center align-middle mw-300',width: '10%', orderable: false},
+                {data: 'action', name: 'action', className: 'text-center align-middle minw-table', orderable: false, searchable: false, width: '30%'},
             ],
             "pageLength": 10,
         });
@@ -80,10 +86,11 @@
     })    
 
     $('body').on('click', '.btn-delete', function() {
+        console.log(121)
         let url = $(this).data('url');
         console.log(url);
-        let datatable = $('#new');
-        confirmDelete(url, datatable, "News");
+        let datatable = $('#customer');
+        confirmDelete(url, datatable, "Customer");
     })
 </script>
     

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->string('name', 50);
             $table->integer('quantity');
-            $table->integer('quantity_remind');
+            $table->integer('quantity_remind')->nullable();
+            $table->integer('price');
             $table->tinyInteger('status')->default(0)->comment('0:stock, 1:out_stock');
             $table->timestamps();
         });

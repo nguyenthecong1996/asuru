@@ -68,7 +68,7 @@
         event.stopPropagation();
         $(this).html('<div class="spinner-grow" role="status"><span class="sr-only">Loading...</span></div>')
         $.ajax({
-            url:"{{route('home.index')}}",
+            url:"{{route('customers.index')}}",
             data: {page:page},
             dataType: 'json',
             success: function(response){
@@ -89,7 +89,7 @@
         var html = `<i class="flag-icon flag-icon-${icon} change-icon"></i>`
         $('#navbarDropdown2').html(html)
         $.ajax({
-            url:"{{route('home.index')}}",
+            url:"{{route('customers.index')}}",
             method: 'post',
             data: {
                 icon : icon
@@ -117,66 +117,7 @@
         }
     });
 </script>
-<!-- <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
 <script>
-  
-    var firebaseConfig = {
-        apiKey: "AIzaSyBXjQfzWJR4pvsDFZVVgtsTiq0fwSmAR0o",
-        authDomain: "keiyoclubdevelopment.firebaseapp.com",
-        projectId: "keiyoclubdevelopment",
-        storageBucket: "keiyoclubdevelopment.appspot.com",
-        messagingSenderId: "263484960993",
-        appId: "1:263484960993:web:d635e5d8b611b3eaad07a0",
-        measurementId: "G-EBHFTZSC3C"
-    };
-      
-    firebase.initializeApp(firebaseConfig);
-    const messaging = firebase.messaging();
-  
-    function initFirebaseMessagingRegistration() {
-            messaging
-            .requestPermission()
-            .then(function () {
-                return messaging.getToken()
-            })
-            .then(function(token) {
-                console.log(token);
    
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-  
-                $.ajax({
-                    url: '{{ route("home.index") }}',
-                    type: 'POST',
-                    data: {
-                        token: token
-                    },
-                    dataType: 'JSON',
-                    success: function (response) {
-                    },
-                    error: function (err) {
-                        console.log('User Chat Token Error'+ err);
-                    },
-                });
-  
-            }).catch(function (err) {
-                console.log('User Chat Token Error'+ err);
-            });
-     }  
-      
-    messaging.onMessage(function(payload) {
-        const noteTitle = payload.notification.title;
-        const noteOptions = {
-            body: payload.notification.body,
-            icon: payload.notification.icon,
-        };
-        new Notification(noteTitle, noteOptions);
-    });
-
-    initFirebaseMessagingRegistration();
-   
-</script> -->
+</script>
 @yield('script')

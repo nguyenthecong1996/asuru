@@ -15,6 +15,8 @@ return new class extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->integer('customer_id');
             $table->string('name', 50);
+            $table->string('car_number', 50)->nullable();
+            $table->date('date');
             $table->tinyInteger('status')->default(0)->comment('0:import, 1:export');
             $table->timestamps();
         });

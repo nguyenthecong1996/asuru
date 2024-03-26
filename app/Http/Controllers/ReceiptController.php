@@ -8,20 +8,33 @@ use Illuminate\Http\Request;
 
 class ReceiptController extends Controller
 {
+
+    protected $receipt;
+
+    public function __construct(Receipt $receipt)
+    {
+        $this->receipt = $receipt;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('admin.customers.index');
+    }
+
+    public function getData(Request $request)
+    {
+        return $this->receipt->getDataAjax($request);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($customerId)
     {
-        //
+        return view('admin.invoice.create', compact('customerId'));
     }
 
     /**

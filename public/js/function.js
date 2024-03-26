@@ -4,11 +4,11 @@ $('body').on('submit', '.base-form', function() {
 
 function confirmDelete(url, datatable = $('#datatable'), name) {
     Swal.fire({
-        title: trans.detele_item.title,
+        title: "Delete",
         icon: "warning",
         showCancelButton: true,
-        cancelButtonText: trans.detele_item.cancel,
-        confirmButtonText: trans.detele_item.button,
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Delete',
     }).then(function (result) {
         if (result.isConfirmed) {
             $.ajax({
