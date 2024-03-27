@@ -30,15 +30,15 @@
                                 <p class="help text-danger">{{ $errors->first('address') }}</p>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <h6>
                                 Car Number<span class="text-danger">*</span>
                                 </h6>
-                                <input type="text" class="form-control" placeholder="Car number" name="car_number" value="{{ old('address') }}">
+                                <input type="text" class="form-control ajax_update invoice" placeholder="Car number" name="car_number" value="{{ old('address') }}">
                                 <p class="help text-danger">{{ $errors->first('address') }}</p>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <h6>
@@ -47,7 +47,7 @@
                                 <input type="text" class="form-control" placeholder="Company Phone" name="company_phone" value="{{ $customer->company_phone }}" disabled>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <h6>
                                 Date <span class="text-danger">*</span>
@@ -55,7 +55,7 @@
                                 <input type="date" class="form-control" placeholder="here..." name="date" value="{{ old('date') }}">
                                 <p class="help text-danger">{{ $errors->first('date') }}</p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 <div class="row" style="margin-top: 25px">
                     <div class="col-md-4">
@@ -117,6 +117,10 @@
         let datatable = $('#customer');
         confirmDelete(url, datatable, "Customer");
     })
+
+    $("p").mouseout(function(){
+        $("p").css("background-color", "gray");
+    });
 </script>
     
 @endsection

@@ -18,6 +18,11 @@ class Customer extends Model
         'company_name', 'address', 'company_phone', 'email', 'customer_name', 'customer_phone','address', 'post_code'
     ];
 
+    public function stores(){
+        return $this->hasMany(Store::class);
+    }
+
+
     public function getDataAjax($request)
     {
         if($request->ajax()) {

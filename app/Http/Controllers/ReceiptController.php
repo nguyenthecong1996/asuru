@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Receipt;
+use App\Models\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,10 +11,12 @@ class ReceiptController extends Controller
 {
 
     protected $receipt;
+    protected $customer;
 
-    public function __construct(Receipt $receipt)
+    public function __construct(Receipt $receipt, Customer $customer)
     {
         $this->receipt = $receipt;
+        $this->customer = $customer;
     }
 
     /**
@@ -34,7 +37,8 @@ class ReceiptController extends Controller
      */
     public function create($customerId)
     {
-        return view('admin.invoice.create', compact('customerId'));
+        $customer = $this->customer->with('stores')->findOrFail($customerId);
+        return view('admin.invoice.create', compact('customerId', 'customer'));
     }
 
     /**
