@@ -27,8 +27,9 @@ class ReceiptController extends Controller
         return view('admin.customers.index');
     }
 
-    public function getData(Request $request)
+    public function getData(Request $request, $customerId)
     {
+        $request->merge(['customerId' => $customerId]);
         return $this->receipt->getDataAjax($request);
     }
 
@@ -44,9 +45,17 @@ class ReceiptController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $arrProductQuantity = array_combine($request->array_product, $request->quantity);
+        // $request->validate($validate);
+        $request->merge(['customerId' => $id, 'arrProductQuantity' => $arrProductQuantity]);
+        // try {
+            $this->receipt->saveData($request);
+        //     return redirect()->route('customers.index')->with('message', 'Create a customer success');
+        // } catch (\Exception $e) {
+        //     return back()->withInput()->with('error', 'Fail');
+        // }
     }
 
     /**

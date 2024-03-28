@@ -90,6 +90,7 @@
 @section('script')
 
 <script>
+    var customerId = <?php echo json_encode($customer->id); ?>;
     $(document).ready(function () {
         var table = $('#invoice').DataTable({
             "dom": '<"top">rt<"bottom mt-3"<"row justify-content-between m-0"<"col-6"li><"col-6 row justify-content-end"p>>><"clear">',
@@ -97,7 +98,7 @@
             deferRender: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('customers.getDataInvoice') }}"
+                url: '/customers/' + customerId + '/invoice/getData',
             },
             "columns": [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, width: '5%', className:'text-center align-middle'},

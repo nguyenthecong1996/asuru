@@ -17,6 +17,11 @@ class Store extends Model
         'name', 'customer_id', 'quantity', 'price'
     ];
 
+    public function receipt()
+    {
+        return $this->belongsToMany(Receipt::class,'store_receipts');
+    }
+
     public function getDataAjax($request)
     {
         if($request->ajax()) {

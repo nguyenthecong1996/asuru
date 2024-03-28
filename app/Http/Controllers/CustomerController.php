@@ -67,11 +67,6 @@ class CustomerController extends Controller
         return view('admin.customers.show', compact('customer'));
     }
 
-    public function getDataInvoice(Request $request)
-    {
-       
-    }
-
     /**
      * Show the form for editing the specified resource.
      */

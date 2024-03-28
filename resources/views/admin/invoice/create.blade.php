@@ -12,7 +12,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body border-top">
-                <form action="{{ route('customers.warehouse.store', $customerId) }}" class="base-form" method="post" enctype="multipart/form-data">
+                <form action="{{ route('customers.invoice.store', $customerId) }}" class="base-form" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row add_select_product">
                         <div class="col-md-12">
@@ -25,7 +25,45 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <Button type="button" id="add_product" class="btn btn-secondary">Add Product</Button>
+                            <div class="form-group">
+                                <h6>
+                                Car Number <span class="text-danger">*</span>
+                                </h6>
+                                <input type="text" class="form-control" placeholder="car_number" name="car_number" value="{{ old('car_number') }}">
+                                <p class="help text-danger">{{ $errors->first('car_number') }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h6>
+                                Date <span class="text-danger">*</span>
+                                </h6>
+                                <input type="date" class="form-control" min={{now()}} placeholder="date" name="date" value="{{ old('date') }}">
+                                <p class="help text-danger">{{ $errors->first('date') }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="import_or_export_id">
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="status"  value="0" checked>Export
+                                </label>
+                            </div>  
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="status" value="1">Import
+                                </label>
+                            </div>
+                        </div>
+    
+                        <div class="col-md-6 mt-3" id="button_product">
+                            <Button type="button" id="add_product" class="btn btn-warning">Add Product</Button>
+                        </div>
+
+                        <div class="col-md-12 row mt-2" id="button_submit">
+                            <div class="col-12 d-flex justify-content-center">
+                                <div class="mt-3 mr-4"><a class="btn btn-secondary w-100 btn-cancel" href="{{ route('customers.index') }}">Cancel</a></div>
+                                <div class="mt-3"><button type="submit" class="btn btn-success">Save</button></div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -43,11 +81,11 @@
         var arrayProductSelected = [];
         $('body').on('click', '#add_product', function() {
             counter++;
-            var selectOptions = `<div class="col-md-12 row row_${counter}">
-                            <div class="col-md-4">
+            var selectOptions = `<div class="col-md-12 mt-3 row row_${counter}">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="sel1">Select list:</label>
-                                    <select class="form-control add_select_product_select" id="sel${counter}">
+                                    <select class="form-control add_select_product_select" name="array_product[]" id="sel${counter}">
                                         <option value="0">--Select--</option>`;
                                         for (var i in customer.stores) {
                                             console.log(arrayProductSelected, customer.stores[i].id)
@@ -60,16 +98,34 @@
                                         selectOptions += `</select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <h6 style="margin-bottom: 0.75rem;">
+                                    After weight <span class="text-danger">*</span>
+                                    </h6>
+                                    <input type="number" id="after_weight${counter}"" class="form-control after_weight" min=0 placeholder="after weight" name="after_weight" value="{{ old('after_weight') }}">
+                                    <p class="help text-danger">{{ $errors->first('quantity') }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <h6 style="margin-bottom: 0.75rem;">
+                                    Before weight <span class="text-danger">*</span>
+                                    </h6>
+                                    <input type="number" id="before_weight${counter}"" class="form-control before_weight" min=0 placeholder="before weight" name="before_weight" value="{{ old('before_weight') }}">
+                                    <p class="help text-danger">{{ $errors->first('quantity') }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <h6 style="margin-bottom: 0.75rem;">
                                     Quantity <span class="text-danger">*</span>
                                     </h6>
-                                    <input type="number" id="quantity_input${counter}"" class="form-control quantity_input" min=0 placeholder="Quantity" name="quantity" value="{{ old('quantity') }}">
+                                    <input type="number" id="quantity_input${counter}"" class="form-control quantity_input" min=0 placeholder="Quantity" name="quantity[]" value="{{ old('quantity') }}">
                                     <p class="help text-danger">{{ $errors->first('quantity') }}</p>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <h6 style="margin-bottom: 0.75rem;">
                                     Price <span class="text-danger">*</span>
@@ -82,7 +138,7 @@
                                     <button type="button" class="btn btn-danger remove_product">Delete</button>
                                 </div>
                         </div>`
-            $(".add_select_product").append(selectOptions);
+            $("#button_submit").before(selectOptions);
         })  
 
         $('body').on('change', '.add_select_product_select', function() {
@@ -96,7 +152,7 @@
 
             arrayProductSelected.push(parseInt(id))
             $(this).closest('.row').find('input[name="price"]').val(price);
-            $(this).closest('.row').find('input[name="quantity"]').val(1);
+            $(this).closest('.row').find('input[name="quantity[]"]').val(1);
         });
 
          // Event listener for quantity change
