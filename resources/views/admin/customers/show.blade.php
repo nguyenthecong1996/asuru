@@ -12,51 +12,6 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body border-top">
-            <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h6>
-                                Company Name</span>
-                                </h6>
-                                <input type="text" class="form-control" placeholder="Company Name" name="company_name" value="{{ $customer->company_name }}" disabled>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h6>
-                                Address
-                                </h6>
-                                <input type="text" class="form-control" placeholder="Address" name="address" value="{{ $customer->address }}" disabled>
-                                <p class="help text-danger">{{ $errors->first('address') }}</p>
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <h6>
-                                Car Number<span class="text-danger">*</span>
-                                </h6>
-                                <input type="text" class="form-control ajax_update invoice" placeholder="Car number" name="car_number" value="{{ old('address') }}">
-                                <p class="help text-danger">{{ $errors->first('address') }}</p>
-                            </div>
-                        </div> -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h6>
-                                 Company Phone
-                                </h6>
-                                <input type="text" class="form-control" placeholder="Company Phone" name="company_phone" value="{{ $customer->company_phone }}" disabled>
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <h6>
-                                Date <span class="text-danger">*</span>
-                                </h6>
-                                <input type="date" class="form-control" placeholder="here..." name="date" value="{{ old('date') }}">
-                                <p class="help text-danger">{{ $errors->first('date') }}</p>
-                            </div>
-                        </div> -->
-                    </div>
                 <div class="row" style="margin-top: 25px">
                     <div class="col-md-4">
                     </div>

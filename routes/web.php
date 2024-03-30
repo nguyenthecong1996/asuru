@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\StoreReceiptController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +45,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => '{customerId}/invoice' , 'as' => 'invoice.'], function(){
             Route::get('/index', [ReceiptController::class, 'index'])->name('index');
             Route::get('/getData', [ReceiptController::class, 'getData'])->name('getData');
+            Route::get('/getDataDetailInvoice/{id}', [StoreReceiptController::class, 'getDataDetailInvoice'])->name('getDataDetailInvoice');
             Route::get('/create', [ReceiptController::class, 'create'])->name('create');
             Route::post('/store', [ReceiptController::class, 'store'])->name('store');
+            Route::get('/{id}/show', [ReceiptController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [ReceiptController::class, 'edit'])->name('edit');
+            Route::post('/{id}/update', [ReceiptController::class, 'update'])->name('update');
+            Route::post('/destroy', [ReceiptController::class, 'destroy'])->name('destroy');
         });
 
     });

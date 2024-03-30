@@ -22,6 +22,11 @@ class Customer extends Model
         return $this->hasMany(Store::class);
     }
 
+    public function invocies()
+    {
+        return $this->hasMany(Receipt::class);
+    }
+
 
     public function getDataAjax($request)
     {
@@ -33,16 +38,19 @@ class Customer extends Model
                     return view('admin.elements.action', [
                         'model' => $data,
                         'title' => 'Customer',
-                        'url_show' => route('customers.show', $data->id),
                         'url_edit' => route('customers.edit', $data->id),
                         'url_destroy' => route('customers.destroy', $data->id)
                     ]);
                 })
-                ->editColumn('warehouse', function($data){
+                ->addColumn('warehouse', function($data){
                     $url = route('customers.warehouse.index', $data->id);
-                    return '<a href="' . $url . '"  target="_blank">' . "Warehouse" . '</a>';
+                    return '<a href="' . $url . '"  target="_blank">' . count($data->stores) . '</a>';
                 })
-                ->rawColumns(['action', 'company_name', 'address', 'company_phone','email','warehouse'])
+                ->addColumn('invoice', function($data){
+                    $url = route('customers.show', $data->id);
+                    return '<a href="' . $url . '"  target="_blank">' . count($data->invocies) . '</a>';
+                })
+                ->rawColumns(['action', 'company_name', 'address', 'company_phone','email','warehouse', 'invoice'])
                 ->make(true);
         }
     }

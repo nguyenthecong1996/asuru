@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title', 'Customer')
+@section('title', 'Warehouse')
 
 @section('breadcrumb')
     <div class="page-title">
-        <h3>Customers</h3>
+        <h3>Warehouse</h3>
     </div>
 @endsection
 
@@ -31,7 +31,7 @@
                                         <th style="font-weight: bold; width:5px;">Name</th>
                                         <th style="font-weight: bold; width:5px;">Quantity</th>
                                         <th style="font-weight: bold; width:5px;">Price</th>
-                                        <th style="font-weight: bold; width:5px;">Total Price</th>
+                                        <th style="font-weight: bold; width:5px;">Weight</th>
                                         <th style="font-weight: bold; width:5px;">Action</th>
                                     </tr>
                                 </thead>
@@ -65,10 +65,10 @@
             },
             "columns": [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, width: '5%', className:'text-center align-middle'},
-                {data: 'name', name: 'name', className: 'text-center align-middle mw-300',width: '20%', orderable: false},
-                {data: 'quantity', name: 'quantity', className: 'text-center align-middle mw-300',width: '25%', orderable: false},
-                {data: 'price', name: 'price', className: 'text-center align-middle mw-300',width: '10%', orderable: false},
-                {data: 'total_price', name: 'total_price', className: 'text-center align-middle mw-300',width: '20%', orderable: false},
+                {data: 'name', name: 'name', className: 'text-center align-middle mw-300',width: '25%', orderable: false},
+                {data: 'quantity', name: 'quantity', className: 'text-center align-middle mw-300',width: '15%', orderable: false},
+                {data: 'price', name: 'price', className: 'text-center align-middle mw-300',width: '15%', orderable: false},
+                {data: 'weight', name: 'weight', className: 'text-center align-middle mw-300',width: '15%', orderable: false},
                 {data: 'action', name: 'action', className: 'text-center align-middle minw-table', orderable: false, searchable: false, width: '30%'},
             ],
             "pageLength": 10,

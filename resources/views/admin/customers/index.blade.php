@@ -37,7 +37,8 @@
                                         <th style="font-weight: bold; width:5px;">Address</th>
                                         <th style="font-weight: bold; width:5px;">Company phone</th>
                                         <th style="font-weight: bold; width:5px;">Email</th>
-                                        <th style="font-weight: bold; width:5px;">Warehouse</th>
+                                        <th style="font-weight: bold; width:5px;">Store</th>
+                                        <th style="font-weight: bold; width:5px;">Invoice</th>
                                         <th style="font-weight: bold; width:5px;">Action</th>
                                     </tr>
                                 </thead>
@@ -73,7 +74,8 @@
                 {data: 'address', name: 'address', className: 'text-center align-middle mw-300',width: '20%', orderable: false},
                 {data: 'company_phone', name: 'company_phone', className: 'text-center align-middle mw-300',width: '10%', orderable: false},
                 {data: 'email', name: 'email', className: 'text-center align-middle mw-300',width: '20%', orderable: false},
-                {data: 'warehouse', name: 'warehouse', className: 'text-center align-middle mw-300',width: '10%', orderable: false},
+                {data: 'warehouse', name: 'warehouse', className: 'text-center align-middle mw-300',width: '5%', orderable: false},
+                {data: 'invoice', name: 'invoice', className: 'text-center align-middle mw-300',width: '5%', orderable: false},
                 {data: 'action', name: 'action', className: 'text-center align-middle minw-table', orderable: false, searchable: false, width: '30%'},
             ],
             "pageLength": 10,

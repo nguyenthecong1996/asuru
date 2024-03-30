@@ -8,12 +8,25 @@ use Illuminate\Http\Request;
 
 class StoreReceiptController extends Controller
 {
+    protected $storeReceipt;
+
+    public function __construct(StoreReceipt $storeReceipt)
+    {
+        $this->storeReceipt = $storeReceipt;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
+    }
+
+    public function getDataDetailInvoice(Request $request, $customerId, $invoiceId)
+    {
+        $request->merge(['customerId' => $customerId, 'invoiceId' => $invoiceId]);
+        return $this->storeReceipt->getDataDetailInvoiceAjax($request);
     }
 
     /**

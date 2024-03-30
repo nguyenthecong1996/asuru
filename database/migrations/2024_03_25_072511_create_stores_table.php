@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('name', 50);
             $table->integer('quantity');
             $table->integer('quantity_remind')->nullable();
-            $table->integer('price');
+            $table->decimal('price', 7,3);
+            $table->decimal('weight', 7,3);
             $table->tinyInteger('status')->default(0)->comment('0:stock, 1:out_stock');
             $table->timestamps();
         });

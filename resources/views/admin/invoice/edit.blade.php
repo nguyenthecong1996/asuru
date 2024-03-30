@@ -12,7 +12,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body border-top">
-                <form action="{{ route('customers.invoice.store', $customerId) }}" class="base-form" method="post" enctype="multipart/form-data">
+                <form action="{{ route('customers.invoice.update', [$customer->id, $invoice->id]) }}" class="base-form" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row add_select_product">
                         <div class="col-md-12">
@@ -20,7 +20,7 @@
                                 <h6>
                                 Name <span class="text-danger">*</span>
                                 </h6>
-                                <input type="text" class="form-control" placeholder="name" name="name" value="{{ old('name') }}">
+                                <input type="text" class="form-control" placeholder="name" name="name" value="{{old('name', $invoice->name)}}">
                                 <p class="help text-danger">{{ $errors->first('name') }}</p>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                                 <h6>
                                 Car Number <span class="text-danger">*</span>
                                 </h6>
-                                <input type="text" class="form-control" placeholder="car_number" name="car_number" value="{{ old('car_number') }}">
+                                <input type="text" class="form-control" placeholder="car_number" name="car_number" value="{{old('car_number', $invoice->car_number)}}">
                                 <p class="help text-danger">{{ $errors->first('car_number') }}</p>
                             </div>
                         </div>
@@ -38,19 +38,19 @@
                                 <h6>
                                 Date <span class="text-danger">*</span>
                                 </h6>
-                                <input type="date" class="form-control" min={{now()}} placeholder="date" name="date" value="{{ old('date') }}">
+                                <input type="date" class="form-control" min={{now()}} placeholder="date" name="date" value="{{old('date', $invoice->date)}}">
                                 <p class="help text-danger">{{ $errors->first('date') }}</p>
                             </div>
                         </div>
                         <div class="col-md-12" id="import_or_export_id">
                             <div class="form-check-inline">
                                 <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="status"  value="0" checked>Export
+                                    <input type="radio" class="form-check-input" name="status"  value="0" {{ $invoice->status == 0 ? 'checked' : '' }}>Export
                                 </label>
                             </div>  
                             <div class="form-check-inline">
                                 <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="status" value="1">Import
+                                    <input type="radio" class="form-check-input" name="status" value="1" {{ $invoice->status == 1 ? 'checked' : '' }}>Import
                                 </label>
                             </div>
                         </div>
@@ -59,9 +59,68 @@
                             <Button type="button" id="add_product" class="btn btn-warning">Add Product</Button>
                         </div>
 
+                        @foreach($invoice->stores as $key => $item)
+                            <div class="col-md-12 mt-3 row row_${counter}">
+                                <input type="hidden" name="weight_different_hidden[]" value="{{ $item->pivot->weight_different }}">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="sel1">Select list:</label>
+                                        <select class="form-control add_select_product_select" name="array_product[]" id="sel{{$key}}">
+                                            @foreach($listStores as $item1)
+                                                @if( $item->id == $item1['id'])
+                                                    <option value="{{$item['id']}}"  data-id="{{$item['id']}}" selected>{{$item['name']}}</option>
+                                                @else
+                                                    <option value="{{$item1['id']}}" data-id="{{$item1['id']}}">{{$item1['name']}}</option>
+                                                @endif
+                                            @endforeach                   
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <h6 style="margin-bottom: 0.75rem;">
+                                        Before weight <span class="text-danger">*</span>
+                                        </h6>
+                                        <input type="number" id="before_weight{{$key}}" class="form-control before_weight" min=0 placeholder="before weight" name="before_weight" value="{{old('weight', $item->weight)}}"  step=any disabled>
+                                        <p class="help text-danger">{{ $errors->first('quantity') }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <h6 style="margin-bottom: 0.75rem;">
+                                        After weight <span class="text-danger">*</span>
+                                        </h6>
+                                        <input type="number" id="after_weight{{$key}}" class="form-control after_weight" min=0 placeholder="after weight" name="after_weight" value="{{old('weight', $item->weight -  $item->pivot->weight_different)}}" step=any>
+                                        <p class="help text-danger">{{ $errors->first('quantity') }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <h6 style="margin-bottom: 0.75rem;">
+                                        Quantity <span class="text-danger">*</span>
+                                        </h6>
+                                        <input type="number" id="quantity_input{{$key}}" class="form-control quantity_input" min=0 placeholder="Quantity" name="quantity[]" value="{{ old('quantity', $item->pivot->quantity) }}">
+                                        <p class="help text-danger">{{ $errors->first('quantity') }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <h6 style="margin-bottom: 0.75rem;">
+                                        Price <span class="text-danger">*</span>
+                                        </h6>
+                                        <input type="number" name="price" class="form-control" placeholder="0" disabled value="{{ old('price',  $item->price*$item->pivot->quantity) }}">
+                                        <p class="help text-danger">{{ $errors->first('price') }}</p>
+                                    </div>
+                                </div>
+                                    <div style="margin-top:30px; margin-inline: auto;"> 
+                                        <button type="button" class="btn btn-danger remove_product">Delete</button>
+                                    </div>
+                            </div>
+                        @endforeach
+
                         <div class="col-md-12 row mt-2" id="button_submit">
                             <div class="col-12 d-flex justify-content-center">
-                                <div class="mt-3 mr-4"><a class="btn btn-secondary w-100 btn-cancel" href="{{ route('customers.show', $customerId) }}">Cancel</a></div>
+                                <div class="mt-3 mr-4"><a class="btn btn-secondary w-100 btn-cancel"  href="{{ route('customers.show', $customer->id) }}">Cancel</a></div>
                                 <div class="mt-3"><button type="submit" class="btn btn-success">Save</button></div>
                             </div>
                         </div>
@@ -194,12 +253,6 @@
             arrayProductSelected = arrayProductSelected.filter(number => number == parseInt(id));
             elementSelected.remove();
          });
-
-
     })
 </script>
 @endsection
-
-
-
-

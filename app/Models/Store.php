@@ -14,7 +14,7 @@ class Store extends Model
 
     protected $table = 'stores';
     protected $fillable = [
-        'name', 'customer_id', 'quantity', 'price'
+        'name', 'customer_id', 'quantity', 'price', 'weight'
     ];
 
     public function receipt()
@@ -40,7 +40,7 @@ class Store extends Model
                 ->editColumn('total_price', function($data){
                     return '1';
                 })
-                ->rawColumns(['action', 'name', 'quantity', 'price','total_price'])
+                ->rawColumns(['action', 'name', 'quantity', 'price','weight'])
                 ->make(true);
         }
     }
@@ -51,7 +51,8 @@ class Store extends Model
             'name' => Common::clearXSS($request->name),
             'customer_id' => $request->customerId,
             'quantity' => $request->quantity,
-            'price' => $request->price
+            'price' => $request->price,
+            'weight' => $request->weight,
         ]; 
 
         return $this->create($data);

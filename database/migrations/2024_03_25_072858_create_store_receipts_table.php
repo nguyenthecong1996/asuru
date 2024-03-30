@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->integer('store_id');
             $table->integer('receipt_id');
+            $table->decimal('weight_different', 7,3);
             $table->integer('quantity');
             $table->timestamps();
         });

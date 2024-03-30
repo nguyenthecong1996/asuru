@@ -51,7 +51,7 @@ class StoreController extends Controller
         $request->merge(['customerId' => $customerId]);
         try {
             $this->store->saveData($request);
-            return redirect()->route('customers.index')->with('message', 'Create a customer success');
+            return redirect()->route('customers.warehouse.index', $customerId)->with('message', 'Create a warehouse success');
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Fail');
         }
